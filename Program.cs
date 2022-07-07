@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ElzaFunctionApp.Services;
 using ElzaFunctionApp.Middlewares;
+using Azure.Storage.Blobs;
 
 namespace ElzaFunctionApp
 {
@@ -18,6 +19,8 @@ namespace ElzaFunctionApp
                 .ConfigureServices((services) =>
                 {
                     services.AddSingleton<MyService>();
+                    services.AddSingleton(new BlobServiceClient(Environment.GetEnvironmentVariable("AzureBlobStorage")).GetBlobContainerClient("test-test"));
+                    services.AddSingleton<IBlobService, BlobService>();
                 })
                 .Build();
 

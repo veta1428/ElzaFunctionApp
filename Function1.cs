@@ -11,23 +11,26 @@ namespace ElzaFunctionApp
     {
         private readonly ILogger _logger;
         private readonly MyService _myService;
+        private readonly IBlobService _blobService;
 
-        public Function1(ILoggerFactory loggerFactory, MyService myService)
+        public Function1(ILoggerFactory loggerFactory, MyService myService, IBlobService blobService)
         {
             _logger = loggerFactory.CreateLogger<Function1>();
             _myService = myService;
+            _blobService = blobService;
         }
 
         [Function("Function1")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "summer/{name:alpha}")] HttpRequestData req, string name)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "summer/{name:alpha}")] HttpRequestData req, 
+            string name)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             _logger.LogInformation("MyService says: " + _myService.SayHello());
 
+            var str = await _blobService.GetDataAsync("content.html");
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/html; charset=utf-8");
-            string contents = File.ReadAllText("content.html");
-            response.WriteString(String.Format(contents, name));
+            response.WriteString(String.Format(str, name));
             var value = Environment.GetEnvironmentVariable("MyValue");
             Console.WriteLine($"Retrieved config value: {value}");
             return response;
