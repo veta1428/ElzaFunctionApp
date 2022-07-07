@@ -3,6 +3,7 @@ using System.Net;
 using ElzaFunctionApp.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ElzaFunctionApp
@@ -12,12 +13,14 @@ namespace ElzaFunctionApp
         private readonly ILogger _logger;
         private readonly MyService _myService;
         private readonly IBlobService _blobService;
+        private readonly IConfiguration _configuration;
 
-        public Function1(ILoggerFactory loggerFactory, MyService myService, IBlobService blobService)
+        public Function1(ILoggerFactory loggerFactory, MyService myService, IBlobService blobService, IConfiguration configuration)
         {
             _logger = loggerFactory.CreateLogger<Function1>();
             _myService = myService;
             _blobService = blobService;
+            _configuration = configuration;
         }
 
         [Function("Function1")]
