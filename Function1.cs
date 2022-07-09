@@ -24,7 +24,7 @@ namespace ElzaFunctionApp
         }
 
         [Function("Function1")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "summer/{name:alpha}")] HttpRequestData req, 
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "summer/{name:alpha}")] HttpRequestData req, 
             string name)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");

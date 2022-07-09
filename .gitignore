@@ -12,6 +12,7 @@ local.settings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+serviceDependencies.AzureFunctionTestApp*
 
 # Build results
 [Dd]ebug/
@@ -24,6 +25,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+PublishProfiles/
+ServiceDependencies/
 
 # Visual Studio 2015 cache/options directory
 .vs/
